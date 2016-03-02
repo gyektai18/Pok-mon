@@ -9,12 +9,13 @@ import java.awt.event.*;
 
 public class MYaREA extends Area implements KeyListener, ActionListener
 {
+	//Initialize the variables and the clock like a smart little boy
 	int m = 2;
 	int n = 2;
 	int row = 8;
 	int sandOrGrass;
-	int amIOnFire = 0;
 	private Timer fireClock = new Timer(4000,this);
+	//Constructor, this code was given
 	public MYaREA() {
 		super();
 		tiles = new int[numTilesX][numTilesY];
@@ -22,7 +23,7 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 			for (int j = 0; j < numTilesY; j++) {
 			}
 		}
-
+		//I like water at the bottom of my screen
 		for (int i = 0; i < numTilesX; i++){
 			for (int j = 8; j < numTilesY; j++){
 				tiles[i][j] = wata;
@@ -30,7 +31,7 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 
 		}
 	}
-
+	//draw the tiles
 	protected void drawTiles() {
 		tiles[m][n] = charizard; 
 		Tile t = null;
@@ -53,6 +54,11 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 						t = new Lava();
 						break;
 					case charizard:
+						
+						//the weird stuff is 
+						//so that charizard's background
+						//matches the background
+						
 						if (j > 7){
 							drawTile(new Water(), i, j);
 						}
@@ -61,9 +67,6 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 						}
 						else if (sandOrGrass > 1) {
 							drawTile(new Glass(), i, j);
-						}
-						else if (amIOnFire == 1){
-							drawTile(new Lava(), i, j);
 						}
 						else {
 							drawTile(new Grass(), i, j);
@@ -88,10 +91,12 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
+		//MOVE CHARIZARD
 		// TODO Auto-generated method stub
 		int arrow = e.getKeyCode();
 		drawTile(new Charizard(), m, n);
 		if (arrow == 39){
+			//match the backgrounds
 			if (n > 7){
 				tiles[m][n] = wata;
 			}
@@ -158,14 +163,14 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 			tiles[m][n] = charizard;
 		}
 		else if (arrow == 32){
-			//fireClock.start();
+			//CHARIZARD USE FLAMETHROWER!!!
+			//only on everything around you though
 			sandOrGrass++;
 			for (int y = 0; y <= 7; y++){
 				for (int c = 0; c <= 9; c++){
 					tiles[c][y] = lava;
 				}
 			}
-			amIOnFire = 1;
 			repaint();
 			fireClock.start();
 
@@ -194,6 +199,9 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 	public void actionPerformed(ActionEvent ee)
 	{
 		// TODO Auto-generated method stub
+		//CHARIZARD BURN THE GRASS TO BURNT GRASS
+		//BURNT GRASS IS SAND
+		//BURNT SAND IS GLASS
 		if (ee.getSource() == fireClock){
 			if (sandOrGrass == 1){
 				for (int y = 0; y <= 7; y++){
@@ -201,7 +209,6 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 						tiles[c][y] = fireGrass;
 					}
 				}
-				amIOnFire = 0;
 				repaint();
 			}
 			else {
@@ -211,7 +218,6 @@ public class MYaREA extends Area implements KeyListener, ActionListener
 					}
 
 				}
-				amIOnFire = 0;
 				repaint();
 
 			}
